@@ -2056,6 +2056,11 @@ static inline Vec2d round(Vec2d const a) {
 }
 #else
 
+#ifdef __MINGW32__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wattributes"
+#endif
+
 // avoid unsafe optimization in function round
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER) && !defined(__clang__) && INSTRSET < 5
 static inline Vec2d round(Vec2d const a) __attribute__((optimize("-fno-unsafe-math-optimizations")));
@@ -2081,6 +2086,9 @@ static inline Vec2d round(Vec2d const a) {
 }
 #if defined (FLOAT_CONTROL_PRECISE_FOR_ROUND)
 #pragma float_control(pop)
+#endif
+#ifdef __MINGW32__
+#pragma GCC diagnostic pop
 #endif
 #endif
 
