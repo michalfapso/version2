@@ -94,7 +94,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m512i used in intrinsics
-    operator __m512i() const {
+    VCL_INL operator __m512i() const {
         return zmm;
     }
     // Member function to load from array (unaligned)
@@ -257,7 +257,7 @@ public:
         return extract(index);
     }
     // Type cast operator to convert to __mmask64 used in intrinsics
-    operator __mmask64() const {
+    VCL_INL operator __mmask64() const {
         return mm;
     }
     // Member function to change a bitfield to a boolean vector
@@ -879,7 +879,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m512i used in intrinsics
-    operator __m512i() const {
+    VCL_INL operator __m512i() const {
         return zmm;
     }
     // Member function to load from array (unaligned)

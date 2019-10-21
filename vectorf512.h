@@ -120,7 +120,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m512 used in intrinsics
-    operator __m512() const {
+    VCL_INL operator __m512() const {
         return zmm;
     }
     // Member function to load from array (unaligned)
@@ -737,7 +737,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m512d used in intrinsics
-    operator __m512d() const {
+    VCL_INL operator __m512d() const {
         return zmm;
     }
     // Member function to load from array (unaligned)

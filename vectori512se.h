@@ -99,7 +99,7 @@ public:
         return *this = Vec64c(x);
     }
     // Type cast operator to convert to __m512i used in intrinsics
-    operator __m512i() const {
+    VCL_INL operator __m512i() const {
         return Vec16i(Vec8i(z0),Vec8i(z1));
     }
 #else

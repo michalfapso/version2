@@ -116,7 +116,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __mmask16 used in intrinsics
-    operator __mmask16() const {
+    VCL_INL operator __mmask16() const {
         return mm;
     }
     // split into two halves
@@ -759,7 +759,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128i used in intrinsics
-    operator __m128i() const {
+    VCL_INL operator __m128i() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
@@ -946,7 +946,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128i used in intrinsics
-    operator __m128i() const {
+    VCL_INL operator __m128i() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
@@ -1878,7 +1878,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128i used in intrinsics
-    operator __m128i() const {
+    VCL_INL operator __m128i() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
@@ -2847,7 +2847,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128i used in intrinsics
-    operator __m128i() const {
+    VCL_INL operator __m128i() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
@@ -3796,7 +3796,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128i used in intrinsics
-    operator __m128i() const {
+    VCL_INL operator __m128i() const {
         return xmm;
     }
     // Member function to load from array (unaligned)

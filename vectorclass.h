@@ -33,6 +33,8 @@
 #define MAX_VECTOR_SIZE 512
 #endif
 
+#include "inline.h"          // Macro for force-inlining functions
+
 // Determine instruction set, and define platform-dependent functions
 #include "instrset.h"        // Select supported instruction set
 

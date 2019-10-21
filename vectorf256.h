@@ -119,7 +119,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m256 used in intrinsics
-    operator __m256() const {
+    VCL_INL operator __m256() const {
         return ymm;
     }
 #if INSTRSET >= 8  // AVX2
@@ -365,7 +365,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m256d used in intrinsics
-    operator __m256d() const {
+    VCL_INL operator __m256d() const {
         return ymm;
     }
 #if INSTRSET >= 8  // 256 bit integer vectors are available, AVX2
@@ -600,7 +600,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m256 used in intrinsics
-    operator __m256() const {
+    VCL_INL operator __m256() const {
         return ymm;
     }
     // Member function to load from array (unaligned)
@@ -1435,7 +1435,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m256d used in intrinsics
-    operator __m256d() const {
+    VCL_INL operator __m256d() const {
         return ymm;
     }
     // Member function to load from array (unaligned)

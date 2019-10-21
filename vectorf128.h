@@ -127,7 +127,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128 used in intrinsics
-    operator __m128() const {
+    VCL_INL operator __m128() const {
         return xmm;
     }
     /* Clang problem:
@@ -331,7 +331,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128d used in intrinsics
-    operator __m128d() const {
+    VCL_INL operator __m128d() const {
         return xmm;
     }
 #ifndef FIX_CLANG_VECTOR_ALIAS_AMBIGUITY
@@ -505,7 +505,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128 used in intrinsics
-    operator __m128() const {
+    VCL_INL operator __m128() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
@@ -1486,7 +1486,7 @@ public:
         return *this;
     }
     // Type cast operator to convert to __m128d used in intrinsics
-    operator __m128d() const {
+    VCL_INL operator __m128d() const {
         return xmm;
     }
     // Member function to load from array (unaligned)
