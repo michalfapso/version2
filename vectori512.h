@@ -190,6 +190,15 @@ static inline Vec512b andnot (Vec512b const a, Vec512b const b) {
     return _mm512_andnot_epi32(b, a);
 }
 
+// horizontal_and. Returns true if all bits are 1
+static inline bool horizontal_and (Vec512b const a) {
+    return horizontal_and(a.get_low() & a.get_high());
+}
+
+// horizontal_or. Returns true if at least one bit is 1
+static inline bool horizontal_or (Vec512b const a) {
+    return horizontal_or(a.get_low() | a.get_high());
+}
 
 /*****************************************************************************
 *
