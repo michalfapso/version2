@@ -1302,6 +1302,36 @@ static inline Vec8q permute8(Vec8q const a) {
     // get flags for possibilities that fit the permutation pattern
     constexpr uint64_t flags = perm_flags<Vec8q>(indexs);
 
+    #if 0
+    std::cout << "permute8<";
+    for (int i=0; i<8; i++) {
+        std::cout << indexs[i] << ", ";
+    }
+    std::cout << "> flags:"<<flags<<" ";
+    if (flags & perm_zeroing) { std::cout << "perm_zeroing, "; }
+    if (flags & perm_perm) { std::cout << "perm_perm, "; }
+    if (flags & perm_allzero) { std::cout << "perm_allzero, "; }
+    if (flags & perm_largeblock) { std::cout << "perm_largeblock, "; }
+    if (flags & perm_addz) { std::cout << "perm_addz, "; }
+    if (flags & perm_addz2) { std::cout << "perm_addz2, "; }
+    if (flags & perm_cross_lane) { std::cout << "perm_cross_lane, "; }
+    if (flags & perm_same_pattern) { std::cout << "perm_same_pattern, "; }
+    if (flags & perm_punpckh) { std::cout << "perm_punpckh, "; }
+    if (flags & perm_punpckl) { std::cout << "perm_punpckl, "; }
+    if (flags & perm_rotate) { std::cout << "perm_rotate, "; }
+    if (flags & perm_shright) { std::cout << "perm_shright, "; }
+    if (flags & perm_shleft) { std::cout << "perm_shleft, "; }
+    if (flags & perm_rotate_big) { std::cout << "perm_rotate_big, "; }
+    if (flags & perm_broadcast) { std::cout << "perm_broadcast, "; }
+    if (flags & perm_zext) { std::cout << "perm_zext, "; }
+    if (flags & perm_compress) { std::cout << "perm_compress, "; }
+    if (flags & perm_expand) { std::cout << "perm_expand, "; }
+    if (flags & perm_outofrange) { std::cout << "perm_outofrange, "; }
+    if (flags & perm_rot_count) { std::cout << "perm_rot_count, "; }
+    if (flags & perm_ipattern) { std::cout << "perm_ipattern, "; }
+    std::cout << std::endl;
+    #endif
+
     static_assert((flags & perm_outofrange) == 0, "Index out of range in permute function");
 
     if constexpr ((flags & perm_allzero) != 0) return _mm512_setzero_si512();  // just return zero
