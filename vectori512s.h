@@ -1916,60 +1916,117 @@ static inline Vec64c shift_bytes_down(Vec64c const a) {
 
 // Function extend_low : extends the low 32 elements to 16 bits with sign extension
 static inline Vec32s extend_low (Vec64c const a) {
+#if 0
+    /*
+        permute8 flags are: perm_perm, perm_cross_lane, perm_zext
+        it goes through this branch:
+
+            else if constexpr ((flags & perm_zext) != 0) {        
+                y = _mm512_cvtepu32_epi64(_mm512_castsi512_si256(y)); // zero extension
+                if constexpr ((flags & perm_addz2) == 0) return y;
+            }
+    */
     __m512i a2   = permute8<0,V_DC,1,V_DC,2,V_DC,3,V_DC>(Vec8q(a));  // get low 64-bit blocks
     Vec64cb sign = _mm512_cmpgt_epi8_mask(_mm512_setzero_si512(),a2);// 0 > a2
     __m512i ss   = _mm512_maskz_set1_epi8(sign, -1);
     return         _mm512_unpacklo_epi8(a2, ss);                     // interleave with sign extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec32c half = a.get_low();
+    return Vec32s(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_high : extends the high 16 elements to 16 bits with sign extension
 static inline Vec32s extend_high (Vec64c const a) {
+#if 0
     __m512i a2   = permute8<4,V_DC,5,V_DC,6,V_DC,7,V_DC>(Vec8q(a));  // get low 64-bit blocks
     Vec64cb sign = _mm512_cmpgt_epi8_mask(_mm512_setzero_si512(),a2);// 0 > a2
     __m512i ss   = _mm512_maskz_set1_epi8(sign, -1);
     return         _mm512_unpacklo_epi8(a2, ss);                     // interleave with sign extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec32c half = a.get_high();
+    return Vec32s(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_low : extends the low 16 elements to 16 bits with zero extension
 static inline Vec32us extend_low (Vec64uc const a) {
+#if 0
     __m512i a2   = permute8<0,V_DC,1,V_DC,2,V_DC,3,V_DC>(Vec8q(a));  // get low 64-bit blocks
     return    _mm512_unpacklo_epi8(a2, _mm512_setzero_si512());      // interleave with zero extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec32uc half = a.get_low();
+    return Vec32us(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_high : extends the high 19 elements to 16 bits with zero extension
 static inline Vec32us extend_high (Vec64uc const a) {
+#if 0
     __m512i a2   = permute8<4,V_DC,5,V_DC,6,V_DC,7,V_DC>(Vec8q(a));  // get low 64-bit blocks
     return    _mm512_unpacklo_epi8(a2, _mm512_setzero_si512());      // interleave with zero extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec32uc half = a.get_high();
+    return Vec32us(extend_low(half), extend_high(half));
+#endif
 }
 
 // Extend 16-bit integers to 32-bit integers, signed and unsigned
 
 // Function extend_low : extends the low 8 elements to 32 bits with sign extension
 static inline Vec16i extend_low (Vec32s const a) {
+#if 0
     __m512i a2   = permute8<0,V_DC,1,V_DC,2,V_DC,3,V_DC>(Vec8q(a));  // get low 64-bit blocks
     Vec32sb sign = _mm512_cmpgt_epi16_mask(_mm512_setzero_si512(),a2);// 0 > a2
     __m512i ss   = _mm512_maskz_set1_epi16(sign, -1);
     return         _mm512_unpacklo_epi16(a2, ss);                    // interleave with sign extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec16s half = a.get_low();
+    return Vec16i(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_high : extends the high 8 elements to 32 bits with sign extension
 static inline Vec16i extend_high (Vec32s const a) {
+#if 0
     __m512i a2   = permute8<4,V_DC,5,V_DC,6,V_DC,7,V_DC>(Vec8q(a));  // get low 64-bit blocks
     Vec32sb sign = _mm512_cmpgt_epi16_mask(_mm512_setzero_si512(),a2);// 0 > a2
     __m512i ss   = _mm512_maskz_set1_epi16(sign, -1);
     return         _mm512_unpacklo_epi16(a2, ss);                    // interleave with sign extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec16s half = a.get_high();
+    return Vec16i(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_low : extends the low 8 elements to 32 bits with zero extension
 static inline Vec16ui extend_low (Vec32us const a) {
+#if 0
     __m512i a2   = permute8<0,V_DC,1,V_DC,2,V_DC,3,V_DC>(Vec8q(a));  // get low 64-bit blocks
     return    _mm512_unpacklo_epi16(a2, _mm512_setzero_si512());     // interleave with zero extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec16us half = a.get_low();
+    return Vec16ui(extend_low(half), extend_high(half));
+#endif
 }
 
 // Function extend_high : extends the high 8 elements to 32 bits with zero extension
 static inline Vec16ui extend_high (Vec32us const a) {
+#if 0
     __m512i a2   = permute8<4,V_DC,5,V_DC,6,V_DC,7,V_DC>(Vec8q(a));  // get low 64-bit blocks
     return    _mm512_unpacklo_epi16(a2, _mm512_setzero_si512());     // interleave with zero extensions
+#else
+    // Significantly faster with 256 bit vectors, probably because of the permute8 call
+    Vec16us half = a.get_high();
+    return Vec16ui(extend_low(half), extend_high(half));
+#endif
 }
 
 
