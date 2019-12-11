@@ -146,6 +146,7 @@ namespace VCL_NAMESPACE {
     bool hasFMA3(void);                // true if FMA3 instructions supported
     bool hasFMA4(void);                // true if FMA4 instructions supported
     bool hasXOP(void);                 // true if XOP  instructions supported
+	bool hasF16C(void);                // true if F16C instructions supported
     bool hasAVX512ER(void);            // true if AVX512ER instructions supported
     bool hasAVX512VBMI(void);          // true if AVX512VBMI instructions supported
     bool hasAVX512VBMI2(void);         // true if AVX512VBMI2 instructions supported
