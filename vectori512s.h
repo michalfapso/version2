@@ -1839,6 +1839,25 @@ static inline Vec32s lookup128(Vec32s const index, Vec32s const table1, Vec32s c
     return select((index >> 6) != 0, d34, d12);
 }
 
+template <int n>
+static inline Vec32s lookup(Vec32s const index, void const * table) {
+    if (n <=  0) return 0;
+    if (n <= 32) return lookup32(index, Vec32s().load(table));
+    // n > 32. Limit index
+    Vec32us index1;
+    if ((n & (n-1)) == 0) {
+        // n is a power of 2, make index modulo n
+        index1 = Vec32us(index) & (n-1);
+    }
+    else {
+        // n is not a power of 2, limit to n-1
+        index1 = min(Vec32us(index), n-1);
+    }
+    Vec32s t1 = _mm512_i32gather_epi32(__m512i(Vec16ui(index1) & 0x0000FFFF), (const int *)table, 2);  // even positions
+    Vec32s t2 = _mm512_i32gather_epi32(_mm512_srli_epi32(index1, 32)        , (const int *)table, 2);        // odd  positions
+    return blend32<0,32,2,34,4,36,6,38,8,40,10,42,12,44,14,46,16,48,18,50,20,52,22,54,24,56,26,58,28,60,30,62>(t1, t2);
+}
+
 
 /*****************************************************************************
 *
