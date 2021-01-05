@@ -70,10 +70,6 @@ int instrset_detect(void) {
     int abcd[4] = {0,0,0,0};                               // cpuid results
     cpuid(abcd, 0);                                        // call cpuid function 0
     if (abcd[0] == 0) return iset;                         // no further cpuid function supported
-
-    cpuid(abcd, 0x80000001);                               // call cpuid function 0x80000001 for feature flags
-    bool has_sse4a = 1 & (abcd[2] >> 6);
-
     cpuid(abcd, 1);                                        // call cpuid function 1 for feature flags
     if ((abcd[3] & (1 <<  0)) == 0) return iset;           // no floating point
     if ((abcd[3] & (1 << 23)) == 0) return iset;           // no MMX
@@ -88,14 +84,10 @@ int instrset_detect(void) {
     if ((abcd[2] & (1 <<  9)) == 0) return iset;           // no SSSE3
     iset = 4;                                              // 4: SSSE3 supported
     if ((abcd[2] & (1 << 19)) == 0) return iset;           // no SSE4.1
-    if (!has_sse4a) {                                      // some AMD processors report sse4.1, but they only support sse4a
-        iset = 5;                                          // 5: SSE4.1 supported
-    }
+    iset = 5;                                              // 5: SSE4.1 supported
     if ((abcd[2] & (1 << 23)) == 0) return iset;           // no POPCNT
     if ((abcd[2] & (1 << 20)) == 0) return iset;           // no SSE4.2
-    if (!has_sse4a) {                                      // some AMD processors report sse4.1, but they only support sse4a
-        iset = 6;                                          // 6: SSE4.2 supported
-    }
+    iset = 6;                                              // 6: SSE4.2 supported
     if ((abcd[2] & (1 << 27)) == 0) return iset;           // no OSXSAVE
     if ((xgetbv(0) & 6) != 6)       return iset;           // AVX not enabled in O.S.
     if ((abcd[2] & (1 << 28)) == 0) return iset;           // no AVX
